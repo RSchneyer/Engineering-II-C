@@ -3,6 +3,7 @@ all: $(f).exe
 
 run: $(f).exe
 	./$(f).exe
+	rm $(f).exe
 
 %.exe: %.o
 	gcc -o $@ $<
