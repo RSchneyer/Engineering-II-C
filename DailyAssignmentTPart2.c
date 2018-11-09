@@ -18,7 +18,7 @@ int main(void){
 
     for(i=0;i<5;i++){
         printf("%d ", randArray[i]);
-        ++occurances[(randArray[i]-1)];
+        ++occurances[(randArray[i]-1)]; 
     }
     printf("\n");
     for(x=0;x<4;x++){

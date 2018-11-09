@@ -15,8 +15,8 @@ clean:
 	rm $(wildcard *.o) $(wildcard *.exe)
 
 cleanTXT: 
-	rm $(wildcard *.txt)
+	rm $(wildcard text_files/*.txt) $(wildcard *.txt) 
 
 #Love this shit
 toTXT:
-	cat $(f).c >> $(f).txt
+	cat $(f).c >> text_files/$(f).txt
