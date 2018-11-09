@@ -13,7 +13,14 @@ int main(void){
     
     for(i1=0; i1<10; i1++){
         printf("%d ",numz[i1]);
-        numz[i1] = newArray[i1];
+    }
+    printf("\n");
+    for(i2=0;i2<10;i2++){
+        numz[i2] = newArray[i2];
+        for(i3=0;i3<10;i3++){
+            printf("%d ", numz[i3]);
+        }
+        printf("\n");
     }
 
 
