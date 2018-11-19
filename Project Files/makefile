@@ -1,16 +1,13 @@
 # make run f=<FILENAME_WITHOUT_EXTENSION>
-all: $(f).exe
+all: main.exe
 
-run: $(f).exe
-	./$(f).exe
-	rm $(f).exe
+run: main.exe
+	./main.exe
+	rm main.exe
 
-%.exe: %.o
-	gcc -o $@ $<
+%.exe: %.c
+	gcc -o $@ $< functions.c
 
-%.o: %.c
-	gcc -c $<
-     
 clean:
 	rm $(wildcard *.o) $(wildcard *.exe)
 
@@ -19,4 +16,4 @@ cleanTXT:
 
 #Love this shit
 toTXT:
-	cat $(f).c >> $(f).txt
+	cat main.c >> main.txt
