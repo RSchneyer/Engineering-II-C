@@ -3,27 +3,6 @@
 #include <time.h>
 #include "functions.h"
 
-void initAccount(double *initDepositAndAPR){
-    double balance, apr;
-    printf("Welcome to Reid's Banking Simulator! ");
-    do{
-        printf("Please enter your starting balance: ");
-        scanf("%lf", &balance);
-        printf("\n");
-    } while(balance<0.0);
-
-    do{
-        printf("Please enter your APR: ");
-        scanf("%lf", &apr);
-        printf("\n");
-    } while(apr<0.0);
-
-    initDepositAndAPR[0] = balance;
-    initDepositAndAPR[1] = apr;
-    createFileHeader();
-}
-
-
 int main(void){
     //Delete old log file
     //Might not be the best way to do this: https://stackoverflow.com/questions/19913446/why-should-the-system-function-be-avoided-in-c-and-c

@@ -73,3 +73,22 @@ int getMenuSelection(){
     return selection;
 
 }
+void initAccount(double *initDepositAndAPR){
+    double balance, apr;
+    printf("Welcome to Reid's Banking Simulator! ");
+    do{
+        printf("Please enter your starting balance: ");
+        scanf("%lf", &balance);
+        printf("\n");
+    } while(balance<0.0);
+
+    do{
+        printf("Please enter your APR: ");
+        scanf("%lf", &apr);
+        printf("\n");
+    } while(apr<0.0);
+
+    initDepositAndAPR[0] = balance;
+    initDepositAndAPR[1] = apr;
+    createFileHeader();
+}
