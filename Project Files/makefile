@@ -4,6 +4,7 @@ all: main.exe
 run: main.exe
 	./main.exe
 	rm main.exe
+	cat xactlog.txt
 
 %.exe: %.c
 	gcc -o $@ $< functions.c

@@ -3,6 +3,8 @@
 #define OUTFILE_NAME "xactlog.txt"
 
 // Creates column headers at the beginning of xactlog.txt
+// Super boring, and didn't really need to be a function, but whatever
+// Might change so that it has the ability to create the header and footer 
 void createFileHeader(){
     FILE * outfile;
     outfile = fopen(OUTFILE_NAME, "w");
@@ -13,6 +15,9 @@ void createFileHeader(){
     fclose(outfile);
 }
 
+// Logs an account change (deposit, withdrawl, fee) to the xactlog.txt file
+// Separates lines and line items with commas, so the text file can be easily converted into a .csv file for use with spreadsheet programs
+// cat xactlog.txt >> xactlog.csv (if you're using linux/bash) 
 void logAccountEvent(double balanceChange, double currentBalance){
     double newBalance = balanceChange + currentBalance;
     FILE * outfile;
@@ -40,19 +45,19 @@ double changeBalance(int promptType, double currentBalance){
             printf("Deposit how much? ");
             scanf("%lf", &balanceChange);
         } while(balanceChange<=0.0);
-        logAccountEvent(balanceChange, currentBalance);
     } 
     else{
         do{
             printf("Withdraw how much? ");
             scanf("%lf", &balanceChange);
-        } while((currentBalance-balanceChange)<0.0);
+        } while((currentBalance-balanceChange)<0.0 && balanceChange<=0.0);
         balanceChange *= -1;
-        logAccountEvent(balanceChange, currentBalance);
     }
+    logAccountEvent(balanceChange, currentBalance);
     return balanceChange;
 }
 //Contains the 7 or so printf statements for the system menu
+//I realize I could have used a single printf statement, but I think multiple statements makes it more readable
 void printMenu(){
     printf("\n");
     printf("SYSTEM MENU\n");
@@ -63,7 +68,7 @@ void printMenu(){
     printf("5 - Close your account\n");
     printf("Please enter your choice: ");
 }
-//Displays the menu from printMenu(), and returns an int between 1 and 5 based on user input
+//Repeatedly calls printMenu() until user input is between 1 and 5 (available menu options), then returns the user's selection
 int getMenuSelection(){
     int selection = 0;
     while(selection<1 || selection>5){
@@ -73,6 +78,10 @@ int getMenuSelection(){
     return selection;
 
 }
+
+//Function to initialize an account
+//Prompts user and takes in input for starting balance and APR, then stores them in the pointered array argument
+//Since C functions can't return multiple vars or arrays
 void initAccount(double *initDepositAndAPR){
     double balance, apr;
     printf("Welcome to Reid's Banking Simulator! ");

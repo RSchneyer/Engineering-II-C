@@ -8,12 +8,14 @@ int main(void){
     //Might not be the best way to do this: https://stackoverflow.com/questions/19913446/why-should-the-system-function-be-avoided-in-c-and-c
     int status = system("rm xactlog.txt");
     // int status = 0;
+    
     if(status == 0){//If the file got deleted succesfully
-        int actionSelection = 1;
+        int actionSelection;
+        double balance, apr;
+        
         // This part is a bit confusing, I wanted one function for setting up an account
         // C functions can't straight up return arrays, so initAccount() takes an array pointer as an argument
         // Basically, I wanted to return two values from one function, and this is my solution
-        double balance, apr;
         double balanceAndAprArray[2] = {0};
         initAccount(balanceAndAprArray);
         // Too bad C doesn't have array destructuring :/
@@ -22,7 +24,7 @@ int main(void){
 
         logAccountEvent(balance, 0);
 
-        while(actionSelection>0 && actionSelection<5){//While the user has chosen a number between 1-4
+        do{
             actionSelection = getMenuSelection();
             printf("Selected menu action: %d\n", actionSelection);
             double balanceChange;
@@ -45,13 +47,9 @@ int main(void){
                     printf("Function not available right now\n");
                     break;
             }
+        } while(actionSelection>0 && actionSelection<5);
 
-        }
         //Account closed
-
-
-
-
     }
     return 0; 
 }
