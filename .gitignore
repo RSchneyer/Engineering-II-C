@@ -3,3 +3,5 @@
 *.exe
 *.o
 *.csv
+/Octave_Stuff/
+/Davids_project/
