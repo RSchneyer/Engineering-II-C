@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include "functions.h"
 
 int main(void){
@@ -12,7 +11,8 @@ int main(void){
     if(status == 0){//If the file got deleted succesfully
         int actionSelection;
         double balance, apr;
-        
+        //use enum for account action types?
+
         // This part is a bit confusing, I wanted one function for setting up an account
         // C functions can't straight up return arrays, so initAccount() takes an array pointer as an argument
         // Basically, I wanted to return two values from one function, and this is my solution
@@ -22,7 +22,7 @@ int main(void){
         balance = balanceAndAprArray[0];
         apr = balanceAndAprArray[1];
 
-        logAccountEvent(balance, 0);
+        logAccountEvent(0, balance, 0);
 
         do{
             actionSelection = getMenuSelection();
@@ -40,15 +40,15 @@ int main(void){
                     break;
                 case 3:
                     //Calculate interest
-                    printf("Function not available right now\n");
+                    balance += calculateInterest(balance, apr);
                     break;
                 case 4:
                     //Apply a fee
-                    printf("Function not available right now\n");
+                    balance += changeBalance(3, balance);
                     break;
             }
         } while(actionSelection>0 && actionSelection<5);
-
+        closeAccount(balance);
         //Account closed
     }
     return 0; 
