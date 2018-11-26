@@ -145,7 +145,7 @@ void initAccount(double *initDepositAndAPR){
     } while(balance<0.0);
 
     do{
-        printf("Please enter your APR: ");
+        printf("Please enter your APR as a percentage: ");
         scanf("%lf", &apr);
         printf("\n");
     } while(apr<0.0);
@@ -163,7 +163,8 @@ void initAccount(double *initDepositAndAPR){
     } while(dateArray[2]<0 || dateArray[2]>9999);
 
     initDepositAndAPR[0] = balance;
-    initDepositAndAPR[1] = apr;
+    //Convert percentage to decimal for use in calculating interest
+    initDepositAndAPR[1] = apr / 100.0;
     createFileHeader(dateArray);
 }
 
