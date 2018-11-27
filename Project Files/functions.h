@@ -9,3 +9,4 @@ double changeBalance(int promptType, double currentBalance);
 double calculateInterest(double balance, double apr);
 
 int getMenuSelection();
+int checkDay(int month, int day);

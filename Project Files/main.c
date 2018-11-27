@@ -5,8 +5,8 @@
 int main(void){
     //Delete old log file
     //Might not be the best way to do this: https://stackoverflow.com/questions/19913446/why-should-the-system-function-be-avoided-in-c-and-c
-    int status = system("rm xactlog.txt");
-    // int status = 0;
+    // int status = system("rm xactlog.txt");
+    int status = 0;
     
     if(status == 0){//If the file got deleted succesfully
         int actionSelection;

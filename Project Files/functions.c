@@ -156,7 +156,7 @@ void initAccount(double *initDepositAndAPR){
     do{
         printf("Please enter account start date (DD):");
         scanf("%d", &dateArray[1]);
-    } while(dateArray[1]<1 || dateArray[1]>31);
+    } while(checkDay(dateArray[0], dateArray[1])==0);
     do{
         printf("Please enter account start date (YYYY):");
         scanf("%d", &dateArray[2]);
@@ -166,6 +166,26 @@ void initAccount(double *initDepositAndAPR){
     //Convert percentage to decimal for use in calculating interest
     initDepositAndAPR[1] = apr / 100.0;
     createFileHeader(dateArray);
+}
+
+//Check to make sure day argument exists in month argument (ignoring leap years)
+//Returns 1 if date is valid, returns 0 otherwise
+int checkDay(int month, int day){
+    int isValid;
+    
+    if(day>31 || day<1){
+        isValid = 0;
+    }
+    else if(month == 4 || month == 6 || month == 9 || month == 11){
+        isValid = (day>30)?(0):(1);
+    }
+    else if(month == 2){
+        isValid = (day>28)?(0):(1);
+    }
+    else{
+        isValid = 1;
+    }
+    return isValid;
 }
 
 //Asks user for the date the account is being closed, then stores that in an array
