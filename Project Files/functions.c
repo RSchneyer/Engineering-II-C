@@ -134,7 +134,8 @@ int getMenuSelection(){
 //Function to initialize an account
 //Prompts user and takes in input for starting balance and APR, then stores them in the pointered array argument
 //Since C functions can't return multiple vars or arrays
-void initAccount(double *initDepositAndAPR){
+
+void initAccount(double *initDepositAndAPR, int *startDateArray){
     double balance, apr;
     int dateArray[3];
     printf("Welcome to Reid's Banking Simulator! ");
@@ -149,23 +150,25 @@ void initAccount(double *initDepositAndAPR){
         scanf("%lf", &apr);
         printf("\n");
     } while(apr<0.0);
-    do{
-        printf("Please enter account start date (MM):");
-        scanf("%d", &dateArray[0]);
-    } while(dateArray[0]<1 || dateArray[0]>12);
-    do{
-        printf("Please enter account start date (DD):");
-        scanf("%d", &dateArray[1]);
-    } while(checkDay(dateArray[0], dateArray[1])==0);
+
     do{
         printf("Please enter account start date (YYYY):");
-        scanf("%d", &dateArray[2]);
-    } while(dateArray[2]<0 || dateArray[2]>9999);
+        scanf("%d", &startDateArray[0]);
+    } while(startDateArray[0]<0 || startDateArray[0]>9999);
+    do{
+        printf("Please enter account start date (MM):");
+        scanf("%d", &startDateArray[1]);
+    } while(startDateArray[1]<1 || startDateArray[1]>12);
+    do{
+        printf("Please enter account start date (DD):");
+        scanf("%d", &startDateArray[2]);
+    } while(checkDay(startDateArray[1], startDateArray[2])==0);
+
 
     initDepositAndAPR[0] = balance;
     //Convert percentage to decimal for use in calculating interest
     initDepositAndAPR[1] = apr / 100.0;
-    createFileHeader(dateArray);
+    createFileHeader(startDateArray);
 }
 
 //Check to make sure day argument exists in month argument (ignoring leap years)
@@ -190,22 +193,40 @@ int checkDay(int month, int day){
 
 //Asks user for the date the account is being closed, then stores that in an array
 //dateArray and finalBalance are then passed to createFileFooter()
-void closeAccount(double finalBalance){
+void closeAccount(double finalBalance, int *startDateArray){
     int dateArray[3];
     printf("\nClosing your account...\n");
+    
     do{
-        printf("Please enter account start date (MM):");
+        printf("Please enter account close date (YYYY):");
         scanf("%d", &dateArray[0]);
-    } while(dateArray[0]<1 || dateArray[0]>12);
-    do{
-        printf("Please enter account start date (DD):");
-        scanf("%d", &dateArray[1]);
-    } while(dateArray[1]<1 || dateArray[1]>31);
-    do{
-        printf("Please enter account start date (YYYY):");
-        scanf("%d", &dateArray[2]);
-    } while(dateArray[2]<0 || dateArray[2]>9999);
+    } while(dateArray[0]<startDateArray[0]);
+    if(dateArray[0]==startDateArray[0]){//If start and end are the same year, check months
+        do{
+            printf("Please enter account close date (MM):");
+            scanf("%d", &dateArray[1]);
+        }while((dateArray[1]<1 || dateArray[1]>12) || dateArray[1]<startDateArray[1]);
 
+        if(dateArray[1]==startDateArray[1]){
+            do{
+                printf("Please enter account close date (DD):");
+                scanf("%d", &dateArray[2]);
+            }while((checkDay(dateArray[1], dateArray[2]))&&dateArray[2]<startDateArray[2]);
+        } else{
+            do{
+                printf("Please enter account close date (DD):");
+                scanf("%d", &dateArray[2]);
+            }while(checkDay(dateArray[1], dateArray[2]));
+        }
+    } else{//If account close year is after account open year
+        do{
+            printf("Please enter account close date (MM):");
+            scanf("%d", &dateArray[1]);
+        }while(dateArray[1]<1 || dateArray[1]>12);
+        do{
+            printf("Please enter account close date (DD):");
+            scanf("%d", &dateArray[2]);
+        }while(checkDay(dateArray[1], dateArray[2]));        
+    }
     createFileFooter(dateArray, finalBalance);
-
 }

@@ -17,7 +17,8 @@ int main(void){
         // C functions can't straight up return arrays, so initAccount() takes an array pointer as an argument
         // Basically, I wanted to return two values from one function, and this is my solution
         double balanceAndAprArray[2] = {0};
-        initAccount(balanceAndAprArray);
+        int startDateArray[3] = {0};
+        initAccount(balanceAndAprArray, startDateArray);
         // Too bad C doesn't have array destructuring :/
         balance = balanceAndAprArray[0];
         apr = balanceAndAprArray[1];
@@ -48,7 +49,7 @@ int main(void){
                     break;
             }
         } while(actionSelection>0 && actionSelection<5);
-        closeAccount(balance);
+        closeAccount(balance, startDateArray);
         //Account closed
     }
     return 0; 
